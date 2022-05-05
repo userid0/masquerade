@@ -1,6 +1,6 @@
 <?php
 
-namespace FoF\Masquerade;
+namespace FoF\Game;
 
 use Carbon\Carbon;
 use Flarum\Database\AbstractModel;
@@ -31,7 +31,7 @@ class Field extends AbstractModel
 
     public $timestamps = true;
 
-    protected $table = 'fof_masquerade_fields';
+    protected $table = 'fof_game_fields';
 
     protected $casts = [
         'required' => 'boolean',

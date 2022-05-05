@@ -12,7 +12,7 @@ import SelectFieldOptionEditor from './SelectFieldOptionEditor';
 
 /* global m, $ */
 
-export default class MasqueradePage extends ExtensionPage {
+export default class GamePage extends ExtensionPage {
   oninit(vnode) {
     super.oninit(vnode);
 
@@ -20,7 +20,7 @@ export default class MasqueradePage extends ExtensionPage {
     this.loading = false;
     this.existing = [];
     this.loadExisting();
-    this.enforceProfileCompletion = app.data.settings['masquerade.force-profile-completion'] === '1';
+    this.enforceProfileCompletion = app.data.settings['game.force-profile-completion'] === '1';
   }
 
   config() {
@@ -51,7 +51,7 @@ export default class MasqueradePage extends ExtensionPage {
     return m(
       '.ExtensionPage-settings.ProfileConfigurePane',
       m('.container', [
-        m('h2', app.translator.trans('fof-masquerade.admin.general-options')),
+        m('h2', app.translator.trans('fof-game.admin.general-options')),
         m(
           '.Form-group',
           Switch.component(
@@ -60,15 +60,15 @@ export default class MasqueradePage extends ExtensionPage {
               onchange: (value) => {
                 const saveValue = value ? '1' : '0';
                 saveSettings({
-                  'masquerade.force-profile-completion': saveValue,
+                  'game.force-profile-completion': saveValue,
                 });
                 this.enforceProfileCompletion = saveValue;
               },
             },
-            app.translator.trans('fof-masquerade.admin.fields.force-user-to-completion')
+            app.translator.trans('fof-game.admin.fields.force-user-to-completion')
           )
         ),
-        m('h2', app.translator.trans('fof-masquerade.admin.fields.title')),
+        m('h2', app.translator.trans('fof-game.admin.fields.title')),
         m(
           'form.js-sortable-fields',
           this.existing.map((field) => {
@@ -114,7 +114,7 @@ export default class MasqueradePage extends ExtensionPage {
               onclick: (e) => this.toggleField(e),
             },
             [
-              app.translator.trans('fof-masquerade.admin.fields.' + (exists ? 'edit' : 'add'), {
+              app.translator.trans('fof-game.admin.fields.' + (exists ? 'edit' : 'add'), {
                 field: field.name(),
               }),
               ' ',
@@ -124,30 +124,30 @@ export default class MasqueradePage extends ExtensionPage {
         ]),
         m('.Field-body', [
           m('.Form-group', [
-            m('label', app.translator.trans('fof-masquerade.admin.fields.name')),
+            m('label', app.translator.trans('fof-game.admin.fields.name')),
             m('input.FormControl', {
               value: field.name(),
               oninput: withAttr('value', this.updateExistingFieldInput.bind(this, 'name', field)),
             }),
-            m('span.helpText', app.translator.trans('fof-masquerade.admin.fields.name-help')),
+            m('span.helpText', app.translator.trans('fof-game.admin.fields.name-help')),
           ]),
           m('.Form-group', [
-            m('label', app.translator.trans('fof-masquerade.admin.fields.description')),
+            m('label', app.translator.trans('fof-game.admin.fields.description')),
             m('input.FormControl', {
               value: field.description(),
               oninput: withAttr('value', this.updateExistingFieldInput.bind(this, 'description', field)),
             }),
-            m('span.helpText', app.translator.trans('fof-masquerade.admin.fields.description-help')),
+            m('span.helpText', app.translator.trans('fof-game.admin.fields.description-help')),
           ]),
           m('.Form-group', [
-            m('label', app.translator.trans('fof-masquerade.admin.fields.icon')),
+            m('label', app.translator.trans('fof-game.admin.fields.icon')),
             m('input.FormControl', {
               value: field.icon(),
               oninput: withAttr('value', this.updateExistingFieldInput.bind(this, 'icon', field)),
             }),
             m(
               'span.helpText',
-              app.translator.trans('fof-masquerade.admin.fields.icon-help', {
+              app.translator.trans('fof-game.admin.fields.icon-help', {
                 a: <a href="https://fontawesome.com/icons?m=free" target="_blank" />,
               })
             ),
@@ -159,7 +159,7 @@ export default class MasqueradePage extends ExtensionPage {
                 state: field.on_bio(),
                 onchange: this.updateExistingFieldInput.bind(this, 'on_bio', field),
               },
-              app.translator.trans('fof-masquerade.admin.fields.on_bio')
+              app.translator.trans('fof-game.admin.fields.on_bio')
             )
           ),
           m(
@@ -169,11 +169,11 @@ export default class MasqueradePage extends ExtensionPage {
                 state: field.required(),
                 onchange: this.updateExistingFieldInput.bind(this, 'required', field),
               },
-              app.translator.trans('fof-masquerade.admin.fields.required')
+              app.translator.trans('fof-game.admin.fields.required')
             )
           ),
           m('.Form-group', [
-            m('label', app.translator.trans('fof-masquerade.admin.fields.type')),
+            m('label', app.translator.trans('fof-game.admin.fields.type')),
             Select.component({
               onchange: (value) => {
                 if (value === 'null') {
@@ -196,14 +196,14 @@ export default class MasqueradePage extends ExtensionPage {
             : null,
           field.type() === null
             ? m('.Form-group', [
-                m('label', app.translator.trans('fof-masquerade.admin.fields.validation')),
+                m('label', app.translator.trans('fof-game.admin.fields.validation')),
                 m('input.FormControl', {
                   value: field.validation(),
                   oninput: withAttr('value', this.updateExistingFieldInput.bind(this, 'validation', field)),
                 }),
                 m(
                   'span.helpText',
-                  app.translator.trans('fof-masquerade.admin.fields.validation-help', {
+                  app.translator.trans('fof-game.admin.fields.validation-help', {
                     a: <a href="https://laravel.com/docs/5.2/validation#available-validation-rules" target="_blank" />,
                   })
                 ),
@@ -219,7 +219,7 @@ export default class MasqueradePage extends ExtensionPage {
                   disabled: !this.readyToAdd(field),
                   onclick: exists ? this.updateExistingField.bind(this, field) : this.submitAddField.bind(this),
                 },
-                app.translator.trans('fof-masquerade.admin.buttons.' + (exists ? 'edit' : 'add') + '-field')
+                app.translator.trans('fof-game.admin.buttons.' + (exists ? 'edit' : 'add') + '-field')
               ),
               exists
                 ? Button.component(
@@ -228,7 +228,7 @@ export default class MasqueradePage extends ExtensionPage {
                       loading: this.loading,
                       onclick: this.deleteField.bind(this, field),
                     },
-                    app.translator.trans('fof-masquerade.admin.buttons.delete-field')
+                    app.translator.trans('fof-game.admin.buttons.delete-field')
                   )
                 : null,
             ])
@@ -253,7 +253,7 @@ export default class MasqueradePage extends ExtensionPage {
     app
       .request({
         method: 'POST',
-        url: app.forum.attribute('apiUrl') + '/masquerade/fields/order',
+        url: app.forum.attribute('apiUrl') + '/game/fields/order',
         body: {
           sort: sorting,
         },
@@ -312,7 +312,7 @@ export default class MasqueradePage extends ExtensionPage {
    * Parses result to update DOM.
    */
   requestSuccess() {
-    this.existing = app.store.all('masquerade-field');
+    this.existing = app.store.all('game-field');
 
     // Update order in case the store order doesn't reflect the true ordering
     this.existing.sort((a, b) => {
@@ -334,7 +334,7 @@ export default class MasqueradePage extends ExtensionPage {
     return app
       .request({
         method: 'GET',
-        url: app.forum.attribute('apiUrl') + '/masquerade/fields',
+        url: app.forum.attribute('apiUrl') + '/game/fields',
       })
       .then((result) => {
         app.store.pushPayload(result);
@@ -347,7 +347,7 @@ export default class MasqueradePage extends ExtensionPage {
    * Resets the new field.
    */
   resetNew() {
-    this.new = app.store.createRecord('masquerade-field', {
+    this.new = app.store.createRecord('game-field', {
       attributes: {
         name: '',
         description: '',
@@ -380,11 +380,12 @@ export default class MasqueradePage extends ExtensionPage {
    */
   availableTypes() {
     return {
-      url: app.translator.trans('fof-masquerade.admin.types.url'),
-      email: app.translator.trans('fof-masquerade.admin.types.email'),
-      boolean: app.translator.trans('fof-masquerade.admin.types.boolean'),
-      select: app.translator.trans('fof-masquerade.admin.types.select'),
-      null: app.translator.trans('fof-masquerade.admin.types.advanced'),
+      url: app.translator.trans('fof-game.admin.types.url'),
+      email: app.translator.trans('fof-game.admin.types.email'),
+      boolean: app.translator.trans('fof-game.admin.types.boolean'),
+      select: app.translator.trans('fof-game.admin.types.select'),
+      password: app.translator.trans('fof-game.admin.types.password'),
+      null: app.translator.trans('fof-game.admin.types.advanced'),
     };
   }
 }

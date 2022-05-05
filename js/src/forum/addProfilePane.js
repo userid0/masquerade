@@ -3,33 +3,33 @@ import app from 'flarum/forum/app';
 import { extend } from 'flarum/common/extend';
 import LinkButton from 'flarum/common/components/LinkButton';
 import UserPage from 'flarum/forum/components/UserPage';
-import RootMasqueradePane from './panes/RootMasqueradePane';
+import RootGamePane from './panes/RootGamePane';
 
 export default function addProfilePane() {
-  app.routes['fof-masquerade'] = {
-    path: '/u/:username/masquerade',
+  app.routes['fof-game'] = {
+    path: '/u/:username/game',
     resolver: {
       onmatch() {
-        if (!app.forum.attribute('canViewMasquerade')) throw new Error();
+        if (!app.forum.attribute('canViewGame')) throw new Error();
 
-        return RootMasqueradePane;
+        return RootGamePane;
       },
     },
   };
 
   extend(UserPage.prototype, 'navItems', function (items) {
-    if (app.forum.attribute('canViewMasquerade') || this.user.canEditMasqueradeProfile()) {
-      const edit = this.user.canEditMasqueradeProfile();
+    if (app.forum.attribute('canViewGame') || this.user.canEditGameProfile()) {
+      const edit = this.user.canEditGameProfile();
 
       items.add(
-        'masquerade',
+        'game',
         LinkButton.component(
           {
-            href: app.route('fof-masquerade', { username: this.user.slug() }),
-            icon: 'far fa-id-card',
+            href: app.route('fof-game', { username: this.user.slug() }),
+            icon: 'fas fa-gamepad ',
             'data-editProfile': edit,
           },
-          app.translator.trans(`fof-masquerade.forum.buttons.${edit ? 'edit' : 'view'}-profile`)
+          app.translator.trans(`fof-game.forum.buttons.${edit ? 'edit' : 'view'}-profile`)
         ),
         200
       );

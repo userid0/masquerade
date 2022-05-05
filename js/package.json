@@ -1,5 +1,5 @@
 {
-    "name": "@fof/masquerade",
+    "name": "@fof/game",
     "private": true,
     "prettier": "@flarum/prettier-config",
     "dependencies": {

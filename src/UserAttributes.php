@@ -1,6 +1,6 @@
 <?php
 
-namespace FoF\Masquerade;
+namespace FoF\Game;
 
 use Flarum\Api\Serializer\UserSerializer;
 use Flarum\User\User;
@@ -13,10 +13,10 @@ class UserAttributes
 
         if ($actor->id === $user->id) {
             // Own profile
-            $attributes['canEditMasqueradeProfile'] = $actor->can('fof.masquerade.have-profile');
+            $attributes['canEditGameProfile'] = $actor->can('fof.game.have-profile');
         } else {
             // Other's profile
-            $attributes['canEditMasqueradeProfile'] = $actor->can('fof.masquerade.edit-others-profile');
+            $attributes['canEditGameProfile'] = $actor->can('fof.game.edit-others-profile');
         }
 
         return $attributes;

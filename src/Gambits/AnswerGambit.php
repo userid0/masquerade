@@ -1,6 +1,6 @@
 <?php
 
-namespace FoF\Masquerade\Gambits;
+namespace FoF\Game\Gambits;
 
 use Flarum\Filter\FilterInterface;
 use Flarum\Filter\FilterState;
@@ -18,7 +18,7 @@ class AnswerGambit extends AbstractRegexGambit implements FilterInterface
 
     public function apply(SearchState $search, $bit): bool
     {
-        if (!$search->getActor()->hasPermission('fof.masquerade.view-profile')) {
+        if (!$search->getActor()->hasPermission('fof.game.view-profile')) {
             return false;
         }
 
@@ -46,7 +46,7 @@ class AnswerGambit extends AbstractRegexGambit implements FilterInterface
     {
         $query->whereExists(function (Builder $query) use ($bit) {
             $query->select($query->raw(1))
-                ->from('fof_masquerade_answers')
+                ->from('fof_game_answers')
                 ->where('users.id', new Expression('user_id'))
                 ->where('content', 'like', "%$bit%");
         }, 'and', $negate);

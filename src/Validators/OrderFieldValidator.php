@@ -1,6 +1,6 @@
 <?php
 
-namespace FoF\Masquerade\Validators;
+namespace FoF\Game\Validators;
 
 use Flarum\Foundation\AbstractValidator;
 

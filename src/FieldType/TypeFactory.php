@@ -1,6 +1,6 @@
 <?php
 
-namespace FoF\Masquerade\FieldType;
+namespace FoF\Game\FieldType;
 
 use Illuminate\Support\Arr;
 
@@ -13,6 +13,7 @@ class TypeFactory
             'email' => EmailField::class,
             'select' => BaseField::class,
             'url' => UrlField::class,
+            'password' => PasswordField::class,
         ];
     }
 

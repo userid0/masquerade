@@ -2,12 +2,12 @@
 
 namespace FoF\Game\FieldType;
 
-class UrlField extends BaseField
+class PasswordField extends BaseField
 {
     public function overrideAttributes(): array
     {
         return [
-            'validation' => 'url',
+            'validation' => 'min:6',
         ];
     }
 }

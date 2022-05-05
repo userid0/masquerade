@@ -1,8 +1,8 @@
 <?php
 
-namespace FoF\Masquerade\Validators;
+namespace FoF\Game\Validators;
 
-use FoF\Masquerade\Field;
+use FoF\Game\Field;
 use Flarum\Foundation\AbstractValidator;
 
 class AnswerValidator extends AbstractValidator

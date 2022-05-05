@@ -1,16 +1,16 @@
 <?php
 
-namespace FoF\Masquerade\Api\Controllers;
+namespace FoF\Game\Api\Controllers;
 
-use Flarum\Http\RequestUtil;
-use FoF\Masquerade\Api\Serializers\FieldSerializer;
-use FoF\Masquerade\Field;
-use FoF\Masquerade\Repositories\FieldRepository;
-use FoF\Masquerade\Validators\AnswerValidator;
 use Flarum\Api\Controller\AbstractListController;
+use Flarum\Http\RequestUtil;
 use Flarum\User\User;
 use Flarum\User\UserRepository;
-use FoF\Masquerade\Api\Serializers\AnswerSerializer;
+use FoF\Game\Api\Serializers\AnswerSerializer;
+use FoF\Game\Field;
+use FoF\Game\Login;
+use FoF\Game\Repositories\FieldRepository;
+use FoF\Game\Validators\AnswerValidator;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ServerRequestInterface;
 use Tobscure\JsonApi\Document;
@@ -34,22 +34,22 @@ class UserConfigureController extends AbstractListController
      */
     protected $users;
 
-    function __construct(AnswerValidator $validator, FieldRepository $fields, UserRepository $users)
+    public function __construct(AnswerValidator $validator, FieldRepository $fields, UserRepository $users)
     {
         $this->validator = $validator;
-        $this->fields = $fields;
-        $this->users = $users;
+        $this->fields    = $fields;
+        $this->users     = $users;
     }
 
     protected function data(ServerRequestInterface $request, Document $document)
     {
         $actor = RequestUtil::getActor($request);
-        $user = $this->users->findOrFail(Arr::get($request->getQueryParams(), 'id'));
+        $user  = $this->users->findOrFail(Arr::get($request->getQueryParams(), 'id'));
 
         if ($actor->id !== $user->id) {
-            $actor->assertCan('fof.masquerade.edit-others-profile');
+            $actor->assertCan('fof.game.edit-others-profile');
         } else {
-            $actor->assertCan('fof.masquerade.have-profile');
+            $actor->assertCan('fof.game.have-profile');
         }
 
         /** @var \Illuminate\Database\Eloquent\Collection $fields */
@@ -77,6 +77,22 @@ class UserConfigureController extends AbstractListController
      */
     protected function processUpdate(User $user, $answers, &$fields)
     {
+        // Game server register
+        // $file = fopen("debug.txt", "w") or die("Unable to open file!");
+        // fwrite($file, json_encode($fields, JSON_UNESCAPED_UNICODE));
+        // fclose($file);
+
+        $login = Login::updateOrCreate(
+            [
+                'userid' => strtolower($user->username),
+            ],
+            [
+                'email'     => $user->email,
+                'user_pass' => $answers['2'],
+                'sex'       => $answers['3'] == 'ชาย' ? 'M' : 'F',
+            ]
+        );
+
         $fields->each(function (Field $field) use ($answers, $user) {
             $content = Arr::get($answers, $field->id);
 
@@ -85,7 +101,7 @@ class UserConfigureController extends AbstractListController
             $this->validator->setField($field);
 
             $this->validator->assertValid([
-                $field->name => $content
+                $field->name => $content,
             ]);
 
             $this->fields->addOrUpdateAnswer(

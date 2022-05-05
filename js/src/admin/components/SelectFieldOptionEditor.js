@@ -13,7 +13,7 @@ export default class SelectFieldOptionEditor extends Component {
 
   view() {
     return m('.Form-group', [
-      m('label', app.translator.trans('fof-masquerade.admin.fields.options')),
+      m('label', app.translator.trans('fof-game.admin.fields.options')),
       m(
         'table',
         m(
@@ -69,7 +69,7 @@ export default class SelectFieldOptionEditor extends Component {
           )
         )
       ),
-      m('.helpText', app.translator.trans('fof-masquerade.admin.fields.option-comma-warning')),
+      m('.helpText', app.translator.trans('fof-game.admin.fields.option-comma-warning')),
       m(
         'table',
         m('tbody'),
@@ -81,7 +81,7 @@ export default class SelectFieldOptionEditor extends Component {
                 this.newOption = event.target.value;
               },
               value: this.newOption,
-              placeholder: app.translator.trans('fof-masquerade.admin.fields.option-new'),
+              placeholder: app.translator.trans('fof-game.admin.fields.option-new'),
             })
           ),
           m(

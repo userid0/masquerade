@@ -5,9 +5,9 @@ fof-game:
                 Please complete the necessary profile fields below.
             profile-completed: Profile completed! <a>Proceed to homepage</a>
         buttons:
-            view-profile: Game profile
-            edit-profile: Game profile
-            save-profile: Save
+            view-profile: เกมส์
+            edit-profile: เกมส์
+            save-profile: บันทึก
         fields:
             select:
                 none-optional: No option selected (optional)
@@ -60,3 +60,4 @@ fof-game:
             email: Email
             select: Dropdown
             url: URL
+            password: Password

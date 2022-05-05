@@ -1,6 +1,6 @@
 <?php
 
-namespace FoF\Masquerade\Content;
+namespace FoF\Game\Content;
 
 use Flarum\Frontend\Document;
 use Flarum\Http\RequestUtil;
@@ -28,9 +28,9 @@ class ViewProfile
         $user = $this->users->findOrFailByUsername($slug);
 
         if ($user->id !== $actor->id) {
-            $actor->assertCan('fof.masquerade.edit-others-profile');
+            $actor->assertCan('fof.game.edit-others-profile');
         }
 
-        $actor->assertCan('fof.masquerade.view-profile');
+        $actor->assertCan('fof.game.view-profile');
     }
 }

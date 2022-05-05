@@ -14,6 +14,6 @@ export default class Field extends Model {
   on_bio = Model.attribute('on_bio');
 
   apiEndpoint() {
-    return '/masquerade/fields' + (this.exists ? '/' + this.data.id : '');
+    return '/game/fields' + (this.exists ? '/' + this.data.id : '');
   }
 }

@@ -8,7 +8,7 @@ export default class Answer extends Model {
   content = Model.attribute('content');
   fieldId = Model.attribute('fieldId');
   field = computed<Field>('fieldId', (fieldId: string) => {
-    return app.store.getById('masquerade-field', fieldId);
+    return app.store.getById('game-field', fieldId);
   });
   userId = Model.attribute('user_id');
 }

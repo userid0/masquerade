@@ -3,7 +3,7 @@ import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import ProfilePane from './ProfilePane';
 import ProfileConfigurePane from './ProfileConfigurePane';
 
-export default class RootMasqueradePane extends UserPage {
+export default class RootGamePane extends UserPage {
   loading = true;
 
   oninit(vnode) {
@@ -14,8 +14,7 @@ export default class RootMasqueradePane extends UserPage {
 
   pageContentComponent() {
     if (!this.user) return null;
-
-    if (this.user.canEditMasqueradeProfile()) return <ProfileConfigurePane user={this.user} />;
+    if (this.user.canEditGameProfile()) return <ProfileConfigurePane user={this.user} />;
     else return <ProfilePane user={this.user} />;
   }
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace FoF\Masquerade\Api\Controllers;
+namespace FoF\Game\Api\Controllers;
 
 use Flarum\Http\RequestUtil;
-use FoF\Masquerade\Api\Serializers\FieldSerializer;
-use FoF\Masquerade\Field;
-use FoF\Masquerade\Repositories\FieldRepository;
-use FoF\Masquerade\Validators\AnswerValidator;
+use FoF\Game\Api\Serializers\FieldSerializer;
+use FoF\Game\Field;
+use FoF\Game\Repositories\FieldRepository;
+use FoF\Game\Validators\AnswerValidator;
 use Flarum\Api\Controller\AbstractListController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
@@ -37,7 +37,7 @@ class UserProfileController extends AbstractListController
     {
         $actor = RequestUtil::getActor($request);
 
-        $actor->assertCan('fof.masquerade.view-profile');
+        $actor->assertCan('fof.game.view-profile');
 
         $id = Arr::get($request->getQueryParams(), 'id');
 

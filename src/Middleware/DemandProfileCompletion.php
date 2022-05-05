@@ -1,13 +1,13 @@
 <?php
 
-namespace FoF\Masquerade\Middleware;
+namespace FoF\Game\Middleware;
 
 use Flarum\Http\RequestUtil;
 use Flarum\Http\SlugManager;
 use Flarum\Http\UrlGenerator;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\User\User;
-use FoF\Masquerade\Repositories\FieldRepository;
+use FoF\Game\Repositories\FieldRepository;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -49,15 +49,15 @@ class DemandProfileCompletion implements MiddlewareInterface
 
             $configureProfileUrl = $this->url->to('forum')->route('user', [
                 'username' => $this->slugManager->forResource(User::class)->toSlug($actor),
-                'filter' => 'masquerade'
+                'filter' => 'game'
             ]);
 
             $configureProfilePathWithoutBase = str_replace($this->url->to('forum')->base(), '', $configureProfileUrl);
 
             if (
                 $configureProfilePathWithoutBase !== $request->getUri()->getPath() &&
-                $actor->can('fof.masquerade.have-profile') &&
-                $this->settings->get('masquerade.force-profile-completion') &&
+                $actor->can('fof.game.have-profile') &&
+                $this->settings->get('game.force-profile-completion') &&
                 !$this->fields->completed($actor->id)
             ) {
                 return new RedirectResponse($configureProfileUrl);

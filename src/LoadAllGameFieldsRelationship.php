@@ -1,11 +1,11 @@
 <?php
 
-namespace FoF\Masquerade;
+namespace FoF\Game;
 
 use Flarum\Api\Controller\ShowForumController;
 use Psr\Http\Message\ServerRequestInterface;
 
-class LoadAllMasqueradeFieldsRelationship
+class LoadAllGameFieldsRelationship
 {
     /**
      * @param ShowForumController $controller
@@ -18,7 +18,7 @@ class LoadAllMasqueradeFieldsRelationship
         // relationship to the /api endpoint. Since the Forum model
         // doesn't actually have a fields relationship, we will manually load and
         // assign the fields data to it using an event listener.
-        $data['masqueradeFields'] = Field::all();
+        $data['gameFields'] = Field::all();
 
         return $data;
     }

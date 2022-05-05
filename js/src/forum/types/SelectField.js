@@ -1,7 +1,7 @@
 import Select from 'flarum/common/components/Select';
 import BaseField from './BaseField';
 
-const NO_OPTION_SELECTED_KEY = 'fof_masquerade_no_option_selected';
+const NO_OPTION_SELECTED_KEY = 'fof_game_no_option_selected';
 
 export default class SelectField extends BaseField {
   editorInput() {
@@ -22,9 +22,9 @@ export default class SelectField extends BaseField {
     let options = {};
 
     if (!this.readAttribute(this.field, 'required')) {
-      options[NO_OPTION_SELECTED_KEY] = app.translator.trans('fof-masquerade.forum.fields.select.none-optional');
+      options[NO_OPTION_SELECTED_KEY] = app.translator.trans('fof-game.forum.fields.select.none-optional');
     } else if (BaseField.isNoOptionSelectedValue(this.value)) {
-      options[NO_OPTION_SELECTED_KEY] = app.translator.trans('fof-masquerade.forum.fields.select.none-required');
+      options[NO_OPTION_SELECTED_KEY] = app.translator.trans('fof-game.forum.fields.select.none-required');
     }
 
     const validationIn = this.validationRule('in');

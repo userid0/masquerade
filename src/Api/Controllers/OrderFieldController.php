@@ -1,12 +1,12 @@
 <?php
 
-namespace FoF\Masquerade\Api\Controllers;
+namespace FoF\Game\Api\Controllers;
 
 use Flarum\Api\Controller\AbstractListController;
 use Flarum\Http\RequestUtil;
-use FoF\Masquerade\Api\Serializers\FieldSerializer;
-use FoF\Masquerade\Repositories\FieldRepository;
-use FoF\Masquerade\Validators\OrderFieldValidator;
+use FoF\Game\Api\Serializers\FieldSerializer;
+use FoF\Game\Repositories\FieldRepository;
+use FoF\Game\Validators\OrderFieldValidator;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ServerRequestInterface;
 use Tobscure\JsonApi\Document;

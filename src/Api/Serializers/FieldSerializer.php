@@ -1,6 +1,6 @@
 <?php
 
-namespace FoF\Masquerade\Api\Serializers;
+namespace FoF\Game\Api\Serializers;
 
 use Flarum\Api\Serializer\AbstractSerializer;
 use Tobscure\JsonApi\Relationship;
@@ -15,7 +15,7 @@ class FieldSerializer extends AbstractSerializer
 
     public function getType($model): string
     {
-        return 'masquerade-field';
+        return 'game-field';
     }
 
     public function answer($model): ?Relationship

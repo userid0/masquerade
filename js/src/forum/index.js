@@ -10,21 +10,22 @@ import mutateUserHero from './mutateUserHero';
 // Exports
 import ProfileConfigurePane from './panes/ProfileConfigurePane';
 import ProfilePane from './panes/ProfilePane';
-import RootMasqueradePane from './panes/RootMasqueradePane';
+import RootGamePane from './panes/RootGamePane';
 import BaseField from './types/BaseField';
 import BooleanField from './types/BooleanField';
 import EmailField from './types/EmailField';
 import SelectField from './types/SelectField';
 import TypeFactory from './types/TypeFactory';
 import UrlField from './types/UrlField';
+import PasswordField from './types/PasswordField';
 
-app.initializers.add('fof-masquerade', (app) => {
-  app.store.models['masquerade-field'] = Field;
-  app.store.models['masquerade-answer'] = Answer;
+app.initializers.add('fof-game', (app) => {
+  app.store.models['game-field'] = Field;
+  app.store.models['game-answer'] = Answer;
 
   User.prototype.bioFields = Model.hasMany('bioFields');
-  User.prototype.masqueradeAnswers = Model.hasMany('masqueradeAnswers');
-  User.prototype.canEditMasqueradeProfile = Model.attribute('canEditMasqueradeProfile');
+  User.prototype.gameAnswers = Model.hasMany('gameAnswers');
+  User.prototype.canEditGameProfile = Model.attribute('canEditGameProfile');
 
   addProfilePane();
 
@@ -34,7 +35,7 @@ app.initializers.add('fof-masquerade', (app) => {
 const components = {
   ProfileConfigurePane,
   ProfilePane,
-  RootMasqueradePane,
+  RootGamePane,
 };
 
 const types = {
@@ -44,6 +45,7 @@ const types = {
   SelectField,
   TypeFactory,
   UrlField,
+  PasswordField,
 };
 
 export { components, types };

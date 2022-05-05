@@ -3,6 +3,7 @@ import BooleanField from './BooleanField';
 import EmailField from './EmailField';
 import SelectField from './SelectField';
 import UrlField from './UrlField';
+import PasswordField from './PasswordField';
 
 export default class TypeFactory {
   static typeForField({ field, set = undefined, value }) {
@@ -35,6 +36,7 @@ export default class TypeFactory {
       email: EmailField,
       select: SelectField,
       url: UrlField,
+      password: PasswordField,
     };
   }
 

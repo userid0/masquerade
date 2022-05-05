@@ -1,17 +1,17 @@
 <?php
 
-namespace FoF\Masquerade\Repositories;
+namespace FoF\Game\Repositories;
 
-use FoF\Masquerade\Answer;
-use FoF\Masquerade\Field;
-use FoF\Masquerade\FieldType\TypeFactory;
+use FoF\Game\Answer;
+use FoF\Game\Field;
+use FoF\Game\FieldType\TypeFactory;
 use Flarum\User\User;
 use Illuminate\Cache\Repository;
 
 class FieldRepository
 {
-    const CACHE_KEY_ALL_FIELDS = 'fof.masquerade.fields.all';
-    const CACHE_KEY_UNCOMPLETED = 'fof.masquerade.uncompleted.u.%d';
+    const CACHE_KEY_ALL_FIELDS = 'fof.game.fields.all';
+    const CACHE_KEY_UNCOMPLETED = 'fof.game.uncompleted.u.%d';
 
     /**
      * @var Field

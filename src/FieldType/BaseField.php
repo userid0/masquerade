@@ -1,6 +1,6 @@
 <?php
 
-namespace FoF\Masquerade\FieldType;
+namespace FoF\Game\FieldType;
 
 class BaseField
 {

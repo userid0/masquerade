@@ -17,29 +17,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class Answer extends AbstractModel
+class Login extends AbstractModel
 {
-    public $timestamps = true;
+    protected $connection = 'database2';
+    protected $table = 'login';
 
-    protected $table = 'fof_game_answers';
+    protected $primaryKey = 'account_id';
+    public $timestamps = false;
+    public $incrementing = false;
 
     protected $fillable = [
-        'user_id',
+        'userid',
+        'email',
+        'user_pass',
+        'sex',
     ];
 
     protected $visible = [
-        'user_id',
-        'content',
-        'field', // Used for the bio feature TODO: should use a relationship
+        //'user_id',
+        //'content',
+        //'field', // Used for the bio feature TODO: should use a relationship
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function field(): BelongsTo
-    {
-        return $this->belongsTo(Field::class);
-    }
 }

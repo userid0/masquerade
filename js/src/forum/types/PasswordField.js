@@ -2,7 +2,7 @@ import icon from 'flarum/common/helpers/icon';
 
 /* global m */
 
-export default class BaseField {
+export default class PasswordField {
   constructor({ field, set, value }) {
     this.field = field;
     this.set = set;
@@ -70,6 +70,7 @@ export default class BaseField {
       oninput: (event) => {
         this.set(event.target.value);
       },
+      type: 'password',
       value: this.value,
       required: this.field.required(),
     };

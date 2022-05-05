@@ -5,10 +5,10 @@ import TypeFactory from './types/TypeFactory';
 
 export default function mutateUserHero() {
   extend(UserCard.prototype, 'infoItems', function (items) {
-    const answers = app.forum.attribute('canViewMasquerade') ? this.attrs.user.bioFields() || [] : [];
+    const answers = app.forum.attribute('canViewGame') ? this.attrs.user.bioFields() || [] : [];
 
     items.add(
-      'masquerade-bio',
+      'game-bio',
       <div>
         {answers.map((answer) => {
           const field = answer.attribute('field');

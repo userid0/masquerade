@@ -1,6 +1,6 @@
 <?php
 
-namespace FoF\Masquerade\Api\Serializers;
+namespace FoF\Game\Api\Serializers;
 
 use Flarum\Api\Serializer\AbstractSerializer;
 use Tobscure\JsonApi\Relationship;
@@ -8,7 +8,7 @@ use Tobscure\JsonApi\Relationship;
 class AnswerSerializer extends AbstractSerializer
 {
     /**
-     * @param \FoF\Masquerade\Answer $model
+     * @param \FoF\Game\Answer $model
      */
     protected function getDefaultAttributes($model): array
     {
@@ -19,7 +19,7 @@ class AnswerSerializer extends AbstractSerializer
 
     public function getType($model): string
     {
-        return 'masquerade-answer';
+        return 'game-answer';
     }
 
     public function field($model): ?Relationship

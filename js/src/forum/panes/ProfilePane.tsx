@@ -22,10 +22,10 @@ export default class ProfilePane extends Component {
 
   view() {
     return (
-      <div class="Masquerade-Bio">
+      <div class="Game-Bio">
         <div class="Fields">
           {app.store
-            .all('masquerade-field')
+            .all('game-field')
             .sort((a, b) => a.sort() - b.sort())
             .map((field) => {
               const answer = this.answers.find((a) => a.field().id() === field.id());
@@ -47,12 +47,12 @@ export default class ProfilePane extends Component {
   }
 
   load() {
-    this.answers = this.user.masqueradeAnswers();
+    this.answers = this.user.gameAnswers();
 
     if (this.answers === false) {
       this.answers = [];
-      app.store.find('users', this.user.id(), { include: 'masqueradeAnswers' }).then(() => {
-        this.answers = this.user.masqueradeAnswers();
+      app.store.find('users', this.user.id(), { include: 'gameAnswers' }).then(() => {
+        this.answers = this.user.gameAnswers();
         m.redraw();
       });
     }

@@ -10,8 +10,8 @@ export default class ProfileConfigurePane extends Component {
     super.oninit(vnode);
     this.loading = true;
 
-    this.enforceProfileCompletion = app.forum.attribute('masquerade.force-profile-completion') || false;
-    this.profileCompleted = app.forum.attribute('masquerade.profile-completed') || false;
+    this.enforceProfileCompletion = app.forum.attribute('game.force-profile-completion') || false;
+    this.profileCompleted = app.forum.attribute('game.profile-completed') || false;
     this.profileNowCompleted = false; // Show "after required" text
     this.answers = [];
     this.answerValues = {};
@@ -27,12 +27,12 @@ export default class ProfileConfigurePane extends Component {
     return (
       <form class="ProfileConfigurePane" onsubmit={this.update.bind(this)}>
         {!!(this.enforceProfileCompletion && !this.profileCompleted) && (
-          <div class="Alert Alert--Error">{app.translator.trans('fof-masquerade.forum.alerts.profile-completion-required')}</div>
+          <div class="Alert Alert--Error">{app.translator.trans('fof-game.forum.alerts.profile-completion-required')}</div>
         )}
 
         <div class="Fields">
           {app.store
-            .all('masquerade-field')
+            .all('game-field')
             .sort((a, b) => a.sort() - b.sort())
             .map((field) => {
               return this.field(field);
@@ -40,12 +40,12 @@ export default class ProfileConfigurePane extends Component {
         </div>
 
         <Button type="submit" className="Button Button--primary" loading={this.loading} disabled={!this.dirty}>
-          {app.translator.trans('fof-masquerade.forum.buttons.save-profile')}
+          {app.translator.trans('fof-game.forum.buttons.save-profile')}
         </Button>
 
         {!!this.profileNowCompleted && (
-          <span class="Masquerade-NowCompleted">
-            {app.translator.trans('fof-masquerade.forum.alerts.profile-completed', {
+          <span class="Game-NowCompleted">
+            {app.translator.trans('fof-game.forum.alerts.profile-completed', {
               a: <Link href={app.route('index')} />,
             })}
           </span>
@@ -65,15 +65,15 @@ export default class ProfileConfigurePane extends Component {
   }
 
   load() {
-    this.answers = this.user.masqueradeAnswers();
+    this.answers = this.user.gameAnswers();
 
     if (this.answers === false) {
       this.answers = [];
-      app.store.find('users', this.user.id(), { include: 'masqueradeAnswers' }).then(() => {
-        this.answers = this.user.masqueradeAnswers();
+      app.store.find('users', this.user.id(), { include: 'gameAnswers' }).then(() => {
+        this.answers = this.user.gameAnswers();
         this.answerValues = {};
 
-        app.store.all('masquerade-field').forEach((field) => {
+        app.store.all('game-field').forEach((field) => {
           const answer = this.answers.find((a) => a.field().id() === field.id());
 
           this.answerValues[field.id()] = answer ? answer.content() : '';
@@ -85,7 +85,7 @@ export default class ProfileConfigurePane extends Component {
     } else {
       this.loading = false;
 
-      app.store.all('masquerade-field').forEach((field) => {
+      app.store.all('game-field').forEach((field) => {
         const answer = this.answers.find((a) => a.field().id() === field.id());
 
         this.answerValues[field.id()] = answer ? answer.content() : '';
@@ -108,7 +108,7 @@ export default class ProfileConfigurePane extends Component {
     app
       .request({
         method: 'POST',
-        url: app.forum.attribute('apiUrl') + '/masquerade/configure/' + this.user.id(),
+        url: app.forum.attribute('apiUrl') + '/game/configure/' + this.user.id(),
         body: this.answerValues,
       })
       .then((response) => {
@@ -128,7 +128,7 @@ export default class ProfileConfigurePane extends Component {
   }
 
   parseResponse(response) {
-    console.log(response);
+    //console.log(response);
     this.answers = app.store.pushPayload(response);
     this.loading = false;
     m.redraw();

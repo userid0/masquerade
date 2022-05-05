@@ -1,10 +1,10 @@
 <?php
 
-namespace FoF\Masquerade\Api\Controllers;
+namespace FoF\Game\Api\Controllers;
 
 use Flarum\Http\RequestUtil;
-use FoF\Masquerade\Api\Serializers\FieldSerializer;
-use FoF\Masquerade\Repositories\FieldRepository;
+use FoF\Game\Api\Serializers\FieldSerializer;
+use FoF\Game\Repositories\FieldRepository;
 use Flarum\Api\Controller\AbstractListController;
 use Psr\Http\Message\ServerRequestInterface;
 use Tobscure\JsonApi\Document;

@@ -1,11 +1,11 @@
 <?php
 
-namespace FoF\Masquerade\Api\Controllers;
+namespace FoF\Game\Api\Controllers;
 
 use Flarum\Http\RequestUtil;
-use FoF\Masquerade\Api\Serializers\FieldSerializer;
-use FoF\Masquerade\Repositories\FieldRepository;
-use FoF\Masquerade\Validators\FieldValidator;
+use FoF\Game\Api\Serializers\FieldSerializer;
+use FoF\Game\Repositories\FieldRepository;
+use FoF\Game\Validators\FieldValidator;
 use Flarum\Api\Controller\AbstractShowController;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ServerRequestInterface;

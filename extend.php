@@ -1,6 +1,6 @@
 <?php
 
-namespace FoF\Masquerade;
+namespace FoF\Game;
 
 use Flarum\Api\Controller\CreateUserController;
 use Flarum\Api\Controller\ListPostsController;
@@ -15,12 +15,17 @@ use Flarum\Api\Serializer\UserSerializer;
 use Flarum\User\Filter\UserFilterer;
 use Flarum\User\Search\UserSearcher;
 use Flarum\User\User;
-use FoF\Masquerade\Api\Controllers as Api;
+use FoF\Game\Api\Controllers as Api;
 use Flarum\Extend;
-use FoF\Masquerade\Api\Serializers\AnswerSerializer;
-use FoF\Masquerade\Api\Serializers\FieldSerializer;
+use FoF\Game\Api\Serializers\AnswerSerializer;
+use FoF\Game\Api\Serializers\FieldSerializer;
+use FoF\Game\ServiceProvider\CustomServiceProvider;
 
 return [
+    // Other extenders
+    (new Extend\ServiceProvider())
+        ->register(CustomServiceProvider::class),
+        
     (new Extend\Frontend('forum'))
         ->js(__DIR__ . '/js/dist/forum.js')
         ->css(__DIR__ . '/resources/less/forum.less'),
@@ -30,14 +35,14 @@ return [
         ->css(__DIR__ . '/resources/less/admin.less'),
 
     (new Extend\Routes('api'))
-        ->get('/masquerade/fields', 'masquerade.api.fields.index', Api\FieldIndexController::class)
-        ->post('/masquerade/fields/order', 'masquerade.api.fields.order', Api\OrderFieldController::class)
-        ->post('/masquerade/fields', 'masquerade.api.fields.create', Api\StoreFieldController::class)
-        ->patch('/masquerade/fields/{id:[0-9]+}', 'masquerade.api.fields.update', Api\UpdateFieldController::class)
-        ->delete('/masquerade/fields[/{id:[0-9]+}]', 'masquerade.api.fields.delete', Api\DeleteFieldController::class)
-        ->get('/masquerade/profile/{id:[0-9]+}', 'masquerade.api.profile', Api\UserProfileController::class)
-        ->get('/masquerade/configure/{id:[0-9]+}', 'masquerade.api.configure', Api\UserConfigureController::class)
-        ->post('/masquerade/configure/{id:[0-9]+}', 'masquerade.api.configure.save', Api\UserConfigureController::class),
+        ->get('/game/fields', 'game.api.fields.index', Api\FieldIndexController::class)
+        ->post('/game/fields/order', 'game.api.fields.order', Api\OrderFieldController::class)
+        ->post('/game/fields', 'game.api.fields.create', Api\StoreFieldController::class)
+        ->patch('/game/fields/{id:[0-9]+}', 'game.api.fields.update', Api\UpdateFieldController::class)
+        ->delete('/game/fields[/{id:[0-9]+}]', 'game.api.fields.delete', Api\DeleteFieldController::class)
+        ->get('/game/profile/{id:[0-9]+}', 'game.api.profile', Api\UserProfileController::class)
+        ->get('/game/configure/{id:[0-9]+}', 'game.api.configure', Api\UserConfigureController::class)
+        ->post('/game/configure/{id:[0-9]+}', 'game.api.configure.save', Api\UserConfigureController::class),
 
     (new Extend\Middleware('forum'))
         ->add(Middleware\DemandProfileCompletion::class),
@@ -45,32 +50,32 @@ return [
     (new Extend\Locales(__DIR__ . '/resources/locale')),
 
     (new Extend\ApiController(ShowForumController::class))
-        ->prepareDataForSerialization(LoadAllMasqueradeFieldsRelationship::class)
-        ->addInclude('masqueradeFields'),
+        ->prepareDataForSerialization(LoadAllGameFieldsRelationship::class)
+        ->addInclude('gameFields'),
 
     (new Extend\ApiController(ShowUserController::class))
         ->addInclude('bioFields.field')
-        ->addInclude('masqueradeAnswers'),
+        ->addInclude('gameAnswers'),
 
     (new Extend\ApiController(UpdateUserController::class))
         ->addInclude('bioFields.field')
-        ->addInclude('masqueradeAnswers'),
+        ->addInclude('gameAnswers'),
 
     (new Extend\ApiController(CreateUserController::class))
         ->addInclude('bioFields.field')
-        ->addInclude('masqueradeAnswers'),
+        ->addInclude('gameAnswers'),
 
     (new Extend\ApiController(ListUsersController::class))
         ->addInclude('bioFields.field')
-        ->addInclude('masqueradeAnswers'),
+        ->addInclude('gameAnswers'),
 
     (new Extend\ApiController(ListPostsController::class))
         ->addInclude('user.bioFields.field')
-        ->addInclude('user.masqueradeAnswers'),
+        ->addInclude('user.gameAnswers'),
 
     (new Extend\ApiController(ShowDiscussionController::class))
         ->addInclude('posts.user.bioFields.field')
-        ->addInclude('posts.user.masqueradeAnswers'),
+        ->addInclude('posts.user.gameAnswers'),
 
     (new Extend\Model(User::class))
         ->relationship('bioFields', function (User $model) {
@@ -79,19 +84,19 @@ return [
                     $q->where('on_bio', true);
                 });
         })
-        ->hasMany('masqueradeAnswers', Answer::class),
+        ->hasMany('gameAnswers', Answer::class),
 
     (new Extend\ApiSerializer(BasicUserSerializer::class))
         ->hasMany('bioFields', AnswerSerializer::class)
-        ->hasMany('masqueradeAnswers', AnswerSerializer::class)
+        ->hasMany('gameAnswers', AnswerSerializer::class)
         ->attributes(function (BasicUserSerializer $serializer, User $user): array {
             $actor = $serializer->getActor();
 
-            if ($actor->cannot('fof.masquerade.view-profile')) {
+            if ($actor->cannot('fof.game.view-profile')) {
                 // When the relationships are auto-loaded later,
                 // this one will be skipped because it has already been set to null
                 $user->setRelation('bioFields', null);
-                $user->setRelation('masqueradeAnswers', null);
+                $user->setRelation('gameAnswers', null);
             }
 
             return [];
@@ -99,7 +104,7 @@ return [
 
     (new Extend\ApiSerializer(ForumSerializer::class))
         ->attributes(ForumAttributes::class)
-        ->hasMany('masqueradeFields', FieldSerializer::class),
+        ->hasMany('gameFields', FieldSerializer::class),
 
     (new Extend\ApiSerializer(UserSerializer::class))
         ->attributes(UserAttributes::class),

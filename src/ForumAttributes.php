@@ -1,10 +1,10 @@
 <?php
 
-namespace FoF\Masquerade;
+namespace FoF\Game;
 
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Settings\SettingsRepositoryInterface;
-use FoF\Masquerade\Repositories\FieldRepository;
+use FoF\Game\Repositories\FieldRepository;
 
 class ForumAttributes
 {
@@ -22,9 +22,9 @@ class ForumAttributes
         $actor = $serializer->getActor();
 
         return [
-            'masquerade.force-profile-completion' => (bool)$this->settings->get('masquerade.force-profile-completion', false),
-            'masquerade.profile-completed' => $actor->isGuest() ? false : $this->fields->completed($actor->id),
-            'canViewMasquerade' => $actor->can('fof.masquerade.view-profile'),
+            'game.force-profile-completion' => (bool)$this->settings->get('game.force-profile-completion', false),
+            'game.profile-completed' => $actor->isGuest() ? false : $this->fields->completed($actor->id),
+            'canViewGame' => $actor->can('fof.game.view-profile'),
         ];
     }
 }
